@@ -1,1 +1,692 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gareth Sheldon | Lead Technical Engineer</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #FFE81F; /* Star Wars Yellow */
+            --secondary: #4A9EFF; /* Electric Blue */
+            --accent: #00D4FF; /* Cyan */
+            --text-main: #E0E0E0;
+            --text-muted: #A0A0A0;
+            --bg-dark: #050505;
+            --card-bg: rgba(6, 15, 25, 0.85);
+            --holo-border: rgba(0, 212, 255, 0.3);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-size: 16px;
+        }
+
+        /* --- BACKGROUND EFFECTS --- */
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .shooting-star {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1), 0 0 0 8px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 1);
+            animation: shoot 5s linear infinite;
+            opacity: 0;
+        }
+        
+        @keyframes shoot {
+            0% { transform: rotate(315deg) translateX(0); opacity: 1; }
+            70% { opacity: 1; }
+            100% { transform: rotate(315deg) translateX(-1000px); opacity: 0; }
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.3;
+        }
+
+        /* --- LAYOUT --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        section {
+            margin-bottom: 6rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3 {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            text-shadow: 0 0 20px rgba(255, 232, 31, 0.3);
+            margin-bottom: 0.5rem;
+            line-height: 1.1;
+        }
+
+        h2 {
+            color: var(--secondary);
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            display: inline-block;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
+        }
+
+        h3 {
+            color: var(--primary);
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: var(--text-main);
+            font-size: 1.05rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        /* --- COMPONENTS --- */
+        
+        /* Holographic Card */
+        .holo-card {
+            background: var(--card-bg);
+            border: 1px solid var(--holo-border);
+            border-radius: 8px;
+            padding: 2rem;
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+
+        .holo-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .holo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .holo-card:hover::before {
+            left: 100%;
+        }
+
+        /* --- HEADER --- */
+        .header {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        .subtitle {
+            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .header-tags {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        .btn-main {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .btn-main:hover {
+            background: var(--primary);
+            color: var(--bg-dark);
+            box-shadow: 0 0 30px rgba(255, 232, 31, 0.6);
+        }
+
+        /* --- GRID SYSTEMS --- */
+        .grid-systems {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .system-card {
+            background: rgba(6, 15, 25, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 4px;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .system-card:hover {
+            border-color: var(--primary);
+            box-shadow: inset 0 0 15px rgba(255, 232, 31, 0.1);
+        }
+
+        .system-card h4 {
+            color: var(--text-main);
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+
+        /* --- TACTICAL OPERATIONS (PROJECTS) --- */
+        .project-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .project-card {
+            border-left: 4px solid var(--accent);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .date-badge {
+            font-family: monospace;
+            color: var(--primary);
+            font-size: 0.9rem;
+            border: 1px solid var(--primary);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1rem;
+        }
+
+        .detail-item strong {
+            display: block;
+            color: var(--secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 0.3rem;
+            letter-spacing: 0.05em;
+        }
+
+        .detail-item span {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* --- TIMELINE (LIGHTSABER STYLE) --- */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            border-left: 4px solid rgba(74, 158, 255, 0.3);
+            margin-left: 1rem;
+        }
+
+        /* The glowing core of the saber */
+        .timeline::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: -2px;
+            width: 2px;
+            background: white;
+            box-shadow: 0 0 10px var(--secondary), 0 0 20px var(--secondary);
+            z-index: 2;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-node {
+            position: absolute;
+            left: -2.6rem;
+            top: 0.2rem;
+            width: 1.2rem;
+            height: 1.2rem;
+            background: var(--bg-dark);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            z-index: 5;
+            box-shadow: 0 0 10px var(--primary);
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover .timeline-node {
+            background: var(--primary);
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        .job-title {
+            color: var(--text-main);
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .company {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        /* --- TECH ARSENAL & CREDENTIALS --- */
+        .tech-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .tech-tag {
+            background: rgba(74, 158, 255, 0.1);
+            color: var(--secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(74, 158, 255, 0.3);
+            font-size: 0.9rem;
+            transition: var(--transition);
+            cursor: default;
+        }
+
+        .tech-tag:hover {
+            background: rgba(74, 158, 255, 0.2);
+            border-color: var(--secondary);
+            box-shadow: 0 0 15px rgba(74, 158, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .cert-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.03);
+            border-left: 3px solid var(--primary);
+        }
+
+        .cert-item h5 {
+            font-size: 1rem;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 4rem 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .header { min-height: auto; padding: 4rem 0; }
+            .project-header { flex-direction: column; align-items: flex-start; }
+            .timeline { margin-left: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scanlines"></div>
+    <div class="starfield" id="starfield">
+        </div>
+    <div class="shooting-star"></div>
+
+    <div class="container">
+        
+        <header class="header">
+            <h1 class="glitch-text">GARETH SHELDON</h1>
+            <div class="subtitle">LEAD TECHNICAL ENGINEER | CYBERSECURITY SPECIALIST</div>
+            
+            <div class="header-tags">
+                <span>// THREAT DETECTION</span>
+                <span>// INCIDENT RESPONSE</span>
+                <span>// CLOUD SECURITY</span>
+                <span>// NETWORK DEFENSE</span>
+            </div>
+
+            <a href="#" class="btn-main">Initiate Comms (LinkedIn)</a>
+        </header>
+
+        <section id="mission">
+            <h2>Mission Profile</h2>
+            <div class="holo-card">
+                <p>
+                    Lead Technical Engineer and Cybersecurity Specialist with a proven track record in fortifying digital infrastructures against advanced persistent threats. I combine strategic oversight with tactical execution to design security architectures that are resilient, scalable, and compliant. My focus is not just on defense, but on creating observability and automated response systems that neutralize threats before impact.
+                </p>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2>Core Systems</h2>
+            <div class="grid-systems">
+                <div class="system-card"><h4>Security Operations</h4></div>
+                <div class="system-card"><h4>Incident Response</h4></div>
+                <div class="system-card"><h4>Cloud & Identity</h4></div>
+                <div class="system-card"><h4>Network Defense</h4></div>
+                <div class="system-card"><h4>Vulnerability Mgmt</h4></div>
+                <div class="system-card"><h4>DevSecOps</h4></div>
+                <div class="system-card"><h4>Compliance</h4></div>
+                <div class="system-card"><h4>Systems Architecture</h4></div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Tactical Operations</h2>
+            <div class="project-grid">
+
+                <div class="holo-card project-card">
+                    <div class="project-header">
+                        <h3>Multi-Platform Security Observability Dashboard</h3>
+                        <span class="date-badge">JAN 2025</span>
+                    </div>
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <strong>Challenge</strong>
+                            <span>Fragmented visibility across hybrid cloud environments leading to delayed detection.</span>
+                        </div>
+                        <div class="detail-item">
+                            <strong>Solution</strong>
+                            <span>Centralized SIEM dashboard integrating AWS CloudWatch, Azure Sentinel, and on-prem logs.</span>
+                        </div>
+                        <div class="detail-item">
+                            <strong>Impact</strong>
+                            <span>Reduced Mean Time to Detect (MTTD) by 65% and streamlined executive reporting.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="holo-card project-card">
+                    <div class="project-header">
+                        <h3>SOC Threat Intelligence Pipeline</h3>
+                        <span class="date-badge">NOV 2024</span>
+                    </div>
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <strong>Challenge</strong>
+                            <span>High volume of false positives overwhelming analysts during peak traffic.</span>
+                        </div>
+                        <div class="detail-item">
+                            <strong>Solution</strong>
+                            <span>Automated ingestion pipeline enriching alerts with threat intel feeds via SOAR playbooks.</span>
+                        </div>
+                        <div class="detail-item">
+                            <strong>Impact</strong>
+                            <span>Eliminated 80% of false positives; increased analyst efficiency significantly.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="holo-card project-card">
+                    <div class="project-header">
+                        <h3>Infrastructure & Security Automation</h3>
+                        <span class="date-badge">SEPT 2024</span>
+                    </div>
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <strong>Challenge</strong>
+                            <span>Inconsistent configuration management creating drift and potential exploits.</span>
+                        </div>
+                        <div class="detail-item">
+                            <strong>Solution</strong>
+                            <span>Implemented Terraform and Ansible for IaC with automated security scanning (trivy/checkov).</span>
+                        </div>
+                        <div class="detail-item">
+                            <strong>Impact</strong>
+                            <span>Achieved 100% configuration consistency and automated patch deployment.</span>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="holo-card project-card">
+                    <div class="project-header">
+                        <h3>Vulnerability Management & Remediation Lab</h3>
+                        <span class="date-badge">DEC 2023</span>
+                    </div>
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <strong>Challenge</strong>
+                            <span>Lack of safe environment to test exploits and remediation strategies.</span>
+                        </div>
+                        <div class="detail-item">
+                            <strong>Solution</strong>
+                            <span>Built an isolated, virtualized range replicating enterprise stack for Red/Blue teaming.</span>
+                        </div>
+                        <div class="detail-item">
+                            <strong>Impact</strong>
+                            <span>Upskilled team on latest CVEs and validated patch efficacy prior to production rollout.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2>Service Record</h2>
+            <div class="timeline">
+                
+                <div class="timeline-item">
+                    <div class="timeline-node"></div>
+                    <div class="job-title">Lead Technical Engineer</div>
+                    <span class="company">CyberDefense Corp | 2023 - Present</span>
+                    <p>Leading a team of 8 engineers in the design and implementation of Zero Trust architecture. Oversaw a 40% reduction in security incidents quarter-over-quarter.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-node"></div>
+                    <div class="job-title">Senior Security Analyst</div>
+                    <span class="company">TechGiant Solutions | 2020 - 2023</span>
+                    <p>Managed SOC Tier 2/3 operations. Spearheaded the incident response for critical ransomware attempts, successfully neutralizing threats with zero data loss.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-node"></div>
+                    <div class="job-title">Network Security Administrator</div>
+                    <span class="company">Global Net Systems | 2018 - 2020</span>
+                    <p>Configured firewalls, VPNs, and IDS/IPS systems. Hardened network perimeter and conducted regular penetration testing audits.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="credentials">
+            <h2>Credentials & Clearances</h2>
+            <div class="cert-grid">
+                <div class="cert-item"><h5>CISSP - Certified Information Systems Security Professional</h5></div>
+                <div class="cert-item"><h5>AWS Certified Security - Specialty</h5></div>
+                <div class="cert-item"><h5>OSCP - Offensive Security Certified Professional</h5></div>
+                <div class="cert-item"><h5>CompTIA Security+ / CySA+</h5></div>
+            </div>
+        </section>
+
+        <section id="arsenal">
+            <h2>Technical Arsenal</h2>
+            <div class="holo-card">
+                <div class="tech-cloud">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Bash/Shell</span>
+                    <span class="tech-tag">SIEM (Splunk/Sentinel)</span>
+                    <span class="tech-tag">Wireshark</span>
+                    <span class="tech-tag">Nmap</span>
+                    <span class="tech-tag">Burp Suite</span>
+                    <span class="tech-tag">Metasploit</span>
+                    <span class="tech-tag">Docker/Kubernetes</span>
+                    <span class="tech-tag">Terraform</span>
+                    <span class="tech-tag">Ansible</span>
+                    <span class="tech-tag">Linux Hardening</span>
+                    <span class="tech-tag">Active Directory</span>
+                    <span class="tech-tag">EDR Solutions</span>
+                    <span class="tech-tag">CrowdStrike</span>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>DESIGNED FOR THE GALACTIC FRONTIER</p>
+            <p>&copy; 2025 Gareth Sheldon. System Secure.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Starfield Generation
+        const starfield = document.getElementById('starfield');
+        const starCount = 100;
+
+        for(let i=0; i<starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            
+            // Random positioning
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            const size = Math.random() * 2 + 1;
+            const duration = Math.random() * 3 + 2;
+            const delay = Math.random() * 5;
+
+            star.style.left = `${x}%`;
+            star.style.top = `${y}%`;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.setProperty('--duration', `${duration}s`);
+            star.style.animationDelay = `${delay}s`;
+
+            starfield.appendChild(star);
+        }
+
+        // Scroll Animation Observer
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
