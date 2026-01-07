@@ -3,689 +3,989 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gareth Sheldon | Lead Technical Engineer</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-
+    <title>Gareth Sheldon | Cybersecurity Specialist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #FFE81F; /* Star Wars Yellow */
-            --secondary: #4A9EFF; /* Electric Blue */
-            --accent: #00D4FF; /* Cyan */
-            --text-main: #E0E0E0;
-            --text-muted: #A0A0A0;
-            --bg-dark: #050505;
-            --card-bg: rgba(6, 15, 25, 0.85);
-            --holo-border: rgba(0, 212, 255, 0.3);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --primary-gold: #FFE81F;
+            --secondary-blue: #4A9EFF;
+            --secondary-cyan: #00D4FF;
+            --dark-bg: #0A0A12;
+            --card-bg: rgba(15, 15, 35, 0.7);
+            --text-light: #C0C0C0;
+            --text-bright: #FFFFFF;
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
             overflow-x: hidden;
-            font-size: 16px;
+            line-height: 1.7;
+            min-height: 100vh;
+            position: relative;
         }
 
-        /* --- BACKGROUND EFFECTS --- */
+        /* Starfield Background */
         .starfield {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            z-index: -2;
             overflow: hidden;
         }
 
         .star {
             position: absolute;
-            background: white;
+            background-color: white;
             border-radius: 50%;
-            opacity: 0.8;
-            animation: twinkle var(--duration) infinite ease-in-out;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
+            animation: twinkle 4s infinite;
         }
 
         .shooting-star {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 4px;
-            height: 4px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1), 0 0 0 8px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 1);
-            animation: shoot 5s linear infinite;
-            opacity: 0;
-        }
-        
-        @keyframes shoot {
-            0% { transform: rotate(315deg) translateX(0); opacity: 1; }
-            70% { opacity: 1; }
-            100% { transform: rotate(315deg) translateX(-1000px); opacity: 0; }
+            width: 2px;
+            height: 60px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(-45deg);
+            animation: shootingStar 6s linear infinite;
         }
 
-        .scanlines {
-            position: fixed;
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes shootingStar {
+            0% {
+                transform: translateX(-100px) translateY(-100px) rotate(-45deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(calc(100vw + 100px)) translateY(calc(100vh + 100px)) rotate(-45deg);
+                opacity: 0;
+            }
+        }
+
+        /* Header with scanning line */
+        .header {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .scanning-line {
+            position: absolute;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
-            background-size: 100% 4px;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
-            z-index: 100;
-            opacity: 0.3;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(74, 158, 255, 0.05) 45%,
+                rgba(74, 158, 255, 0.1) 50%,
+                rgba(74, 158, 255, 0.05) 55%,
+                transparent 100%
+            );
+            animation: scan 4s infinite;
         }
 
-        /* --- LAYOUT --- */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
+        @keyframes scan {
+            0% { top: -100%; }
+            100% { top: 100%; }
         }
 
-        section {
-            margin-bottom: 6rem;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- TYPOGRAPHY --- */
-        h1, h2, h3 {
+        .main-title {
+            font-size: clamp(2.5rem, 8vw, 6rem);
             font-weight: 800;
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
+            color: var(--text-bright);
+            text-shadow: 
+                0 0 10px rgba(255, 232, 31, 0.5),
+                0 0 20px rgba(255, 232, 31, 0.4),
+                0 0 30px rgba(255, 232, 31, 0.3);
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
         }
 
-        h1 {
-            color: var(--primary);
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            text-shadow: 0 0 20px rgba(255, 232, 31, 0.3);
-            margin-bottom: 0.5rem;
-            line-height: 1.1;
+        .subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 600;
+            color: var(--secondary-blue);
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
+            letter-spacing: 0.15em;
         }
 
-        h2 {
-            color: var(--secondary);
-            font-size: 2rem;
-            margin-bottom: 2rem;
+        .tags {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            letter-spacing: 0.1em;
+            color: var(--text-light);
+            text-shadow: 0 0 5px rgba(0, 212, 255, 0.3);
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem 2rem;
+            background: transparent;
+            color: var(--text-bright);
+            border: 2px solid var(--primary-gold);
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 232, 31, 0.3), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .contact-btn:hover {
+            box-shadow: 0 0 20px rgba(255, 232, 31, 0.7);
+            color: var(--primary-gold);
+        }
+
+        .contact-btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        /* Section styling */
+        .section {
+            padding: 6rem 2rem;
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
             display: inline-block;
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 0.5rem;
             text-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
         }
 
-        h3 {
-            color: var(--primary);
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--secondary-blue), var(--secondary-cyan), transparent);
+            border-radius: 2px;
         }
 
-        p {
-            color: var(--text-main);
-            font-size: 1.05rem;
-            margin-bottom: 1rem;
-            font-weight: 300;
-        }
-
-        /* --- COMPONENTS --- */
-        
-        /* Holographic Card */
-        .holo-card {
+        /* Holographic cards */
+        .card {
             background: var(--card-bg);
-            border: 1px solid var(--holo-border);
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 2rem;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(74, 158, 255, 0.2);
             position: relative;
             overflow: hidden;
-            transition: var(--transition);
-            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .holo-card:hover {
-            border-color: var(--accent);
-            box-shadow: 0 0 25px rgba(0, 212, 255, 0.2);
-            transform: translateY(-5px);
-        }
-
-        .holo-card::before {
+        .card::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
             transition: 0.5s;
         }
 
-        .holo-card:hover::before {
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(74, 158, 255, 0.3);
+            border-color: var(--secondary-blue);
+        }
+
+        .card:hover::before {
             left: 100%;
         }
 
-        /* --- HEADER --- */
-        .header {
-            min-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            position: relative;
+        /* Mission Profile */
+        .mission-profile {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.8;
         }
 
-        .subtitle {
-            color: var(--accent);
-            font-size: 1.2rem;
+        .highlight {
+            color: var(--primary-gold);
             font-weight: 600;
-            letter-spacing: 0.1em;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
         }
 
-        .header-tags {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: 3rem;
-            color: var(--text-muted);
-            font-family: monospace;
-        }
-
-        .btn-main {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-            font-weight: 700;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            position: relative;
-            overflow: hidden;
-            transition: var(--transition);
-        }
-
-        .btn-main:hover {
-            background: var(--primary);
-            color: var(--bg-dark);
-            box-shadow: 0 0 30px rgba(255, 232, 31, 0.6);
-        }
-
-        /* --- GRID SYSTEMS --- */
-        .grid-systems {
+        /* Core Systems */
+        .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 1.5rem;
+            margin-top: 2rem;
         }
 
-        .system-card {
-            background: rgba(6, 15, 25, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: 4px;
-            transition: var(--transition);
+        .skill-card {
             text-align: center;
+            padding: 2rem 1.5rem;
         }
 
-        .system-card:hover {
-            border-color: var(--primary);
-            box-shadow: inset 0 0 15px rgba(255, 232, 31, 0.1);
+        .skill-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(74, 158, 255, 0.1);
+            border-radius: 50%;
+            border: 1px solid rgba(74, 158, 255, 0.3);
         }
 
-        .system-card h4 {
-            color: var(--text-main);
-            font-weight: 600;
-            margin-bottom: 0;
+        .skill-icon::after {
+            content: '';
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 212, 255, 0.2);
+            border-radius: 50%;
         }
 
-        /* --- TACTICAL OPERATIONS (PROJECTS) --- */
-        .project-grid {
+        .skill-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 1rem;
+        }
+
+        /* Tactical Operations */
+        .projects-grid {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2rem;
+            margin-top: 2rem;
         }
 
         .project-card {
-            border-left: 4px solid var(--accent);
+            position: relative;
         }
 
-        .project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .date-badge {
-            font-family: monospace;
-            color: var(--primary);
+        .project-date {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
             font-size: 0.9rem;
-            border: 1px solid var(--primary);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
+            font-weight: 600;
+            color: var(--secondary-cyan);
         }
 
-        .detail-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 1rem;
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 1rem;
         }
 
-        .detail-item strong {
+        .project-challenge,
+        .project-solution,
+        .project-impact {
+            margin-bottom: 1rem;
+        }
+
+        .project-label {
+            font-weight: 600;
+            color: var(--secondary-blue);
             display: block;
-            color: var(--secondary);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            margin-bottom: 0.3rem;
-            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
         }
 
-        .detail-item span {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-        }
-
-        /* --- TIMELINE (LIGHTSABER STYLE) --- */
+        /* Service Record */
         .timeline {
             position: relative;
-            padding-left: 2rem;
-            border-left: 4px solid rgba(74, 158, 255, 0.3);
-            margin-left: 1rem;
+            max-width: 1000px;
+            margin: 3rem auto 0;
         }
 
-        /* The glowing core of the saber */
-        .timeline::after {
+        .timeline::before {
             content: '';
             position: absolute;
             top: 0;
             bottom: 0;
-            left: -2px;
-            width: 2px;
-            background: white;
-            box-shadow: 0 0 10px var(--secondary), 0 0 20px var(--secondary);
-            z-index: 2;
+            width: 4px;
+            background: linear-gradient(to bottom, 
+                var(--secondary-blue), 
+                var(--secondary-cyan));
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+            box-shadow: 0 0 15px rgba(74, 158, 255, 0.5);
         }
 
         .timeline-item {
             position: relative;
-            margin-bottom: 3rem;
-            padding-left: 2rem;
+            width: 50%;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
         }
 
         .timeline-node {
             position: absolute;
-            left: -2.6rem;
-            top: 0.2rem;
-            width: 1.2rem;
-            height: 1.2rem;
-            background: var(--bg-dark);
-            border: 2px solid var(--primary);
+            top: 2rem;
+            width: 24px;
+            height: 24px;
+            background: var(--card-bg);
+            border: 3px solid var(--secondary-blue);
             border-radius: 50%;
-            z-index: 5;
-            box-shadow: 0 0 10px var(--primary);
-            transition: var(--transition);
+            box-shadow: 0 0 15px rgba(74, 158, 255, 0.7);
+            animation: pulse 2s infinite;
         }
 
-        .timeline-item:hover .timeline-node {
-            background: var(--primary);
-            box-shadow: 0 0 20px var(--primary);
+        .timeline-item:nth-child(odd) .timeline-node {
+            right: -12px;
         }
 
-        .job-title {
-            color: var(--text-main);
-            font-size: 1.3rem;
-            font-weight: 700;
+        .timeline-item:nth-child(even) .timeline-node {
+            left: -12px;
         }
 
-        .company {
-            color: var(--accent);
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(74, 158, 255, 0.7); }
+            70% { box-shadow: 0 0 0 12px rgba(74, 158, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(74, 158, 255, 0); }
+        }
+
+        .timeline-content {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid rgba(74, 158, 255, 0.2);
+        }
+
+        .timeline-date {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--secondary-cyan);
             margin-bottom: 0.5rem;
-            display: block;
         }
 
-        /* --- TECH ARSENAL & CREDENTIALS --- */
-        .tech-cloud {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
+        .timeline-role {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 0.5rem;
         }
 
-        .tech-tag {
-            background: rgba(74, 158, 255, 0.1);
-            color: var(--secondary);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            border: 1px solid rgba(74, 158, 255, 0.3);
-            font-size: 0.9rem;
-            transition: var(--transition);
-            cursor: default;
+        .timeline-company {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-gold);
+            margin-bottom: 1rem;
         }
 
-        .tech-tag:hover {
-            background: rgba(74, 158, 255, 0.2);
-            border-color: var(--secondary);
-            box-shadow: 0 0 15px rgba(74, 158, 255, 0.4);
-            transform: scale(1.05);
-        }
-
-        .cert-grid {
+        /* Credentials & Clearances */
+        .certs-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
-        .cert-item {
+        .cert-category {
+            margin-bottom: 2.5rem;
+        }
+
+        .cert-category-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .cert-card {
+            text-align: center;
+            padding: 1.2rem 0.8rem;
+        }
+
+        .cert-logo {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 0.8rem;
+            background: rgba(255, 232, 31, 0.1);
+            border-radius: 10px;
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: rgba(255,255,255,0.03);
-            border-left: 3px solid var(--primary);
-        }
-
-        .cert-item h5 {
-            font-size: 1rem;
-            color: var(--text-main);
-            font-weight: 600;
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            text-align: center;
-            padding: 4rem 0;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: var(--text-muted);
+            justify-content: center;
+            font-weight: 700;
             font-size: 0.9rem;
+            color: var(--primary-gold);
+            line-height: 1.2;
         }
 
-        /* --- RESPONSIVE --- */
+        .cert-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .cert-org {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            opacity: 0.8;
+        }
+
+        /* Technical Arsenal */
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.9rem;
+            margin-top: 2rem;
+        }
+
+        .tag {
+            padding: 0.55rem 1.3rem;
+            background: rgba(15, 15, 35, 0.5);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .tag:hover {
+            border-color: var(--secondary-cyan);
+            transform: translateY(-3px);
+        }
+
+        .tag:hover::before {
+            left: 100%;
+        }
+
+        /* Section fade-in on scroll */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-light);
+            font-size: 1rem;
+            border-top: 1px solid rgba(74, 158, 255, 0.1);
+            margin-top: 2rem;
+        }
+
+        .creative-note {
+            display: block;
+            margin-top: 1rem;
+            font-style: italic;
+            color: var(--secondary-blue);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Responsive adjustments */
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .header { min-height: auto; padding: 4rem 0; }
-            .project-header { flex-direction: column; align-items: flex-start; }
-            .timeline { margin-left: 0.5rem; }
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 0;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-node {
+                left: 18px !important;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .certs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: clamp(2rem, 8vw, 4rem);
+            }
+            
+            .section {
+                padding: 4rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .certs-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Starfield Background -->
+    <div class="starfield" id="starfield"></div>
 
-    <div class="scanlines"></div>
-    <div class="starfield" id="starfield">
+    <!-- Header Section -->
+    <header class="header">
+        <div class="scanning-line"></div>
+        <h1 class="main-title">GARETH SHELDON</h1>
+        <h2 class="subtitle">LEAD TECHNICAL ENGINEER | CYBERSECURITY SPECIALIST</h2>
+        <p class="tags">Threat Hunting • Zero Trust • Cloud Security • Incident Response • Network Defense</p>
+        <a href="https://linkedin.com/in/gareth-sheldon" class="contact-btn" target="_blank">CONNECT ON LINKEDIN</a>
+    </header>
+
+    <!-- Mission Profile Section -->
+    <section class="section fade-in" id="mission">
+        <h2 class="section-title">MISSION PROFILE</h2>
+        <div class="card mission-profile">
+            <p>Lead Technical Engineer and Cybersecurity Specialist securing complex hybrid IT and cloud environments — with a focus on <span class="highlight">FinTech ecosystems</span>. I ensure infrastructure runs smoother and hits harder than one of my music mixes.</p>
+            <p>By day, I lead advanced technical support, optimize environments for stringent security and stability, and serve as the top escalation point for critical outages — performing deep-dive RCA for server, network, and cloud incidents.</p>
+            <p>My stack spans <span class="highlight">Azure, Entra ID, Intune, Microsoft Sentinel, Cisco, Sophos, FortiGate</span>, and <span class="highlight">Kubernetes</span>. But what truly sets me apart is the fusion of structured engineering logic and creative problem-solving — honed through years producing music in FL Studio.</p>
+            <p class="creative-note">"Engineering gives me structure. Music gives me rhythm. Together, they teach me to solve every challenge with both logic and creativity."</p>
         </div>
-    <div class="shooting-star"></div>
+    </section>
 
-    <div class="container">
-        
-        <header class="header">
-            <h1 class="glitch-text">GARETH SHELDON</h1>
-            <div class="subtitle">LEAD TECHNICAL ENGINEER | CYBERSECURITY SPECIALIST</div>
-            
-            <div class="header-tags">
-                <span>// THREAT DETECTION</span>
-                <span>// INCIDENT RESPONSE</span>
-                <span>// CLOUD SECURITY</span>
-                <span>// NETWORK DEFENSE</span>
+    <!-- Core Systems Section -->
+    <section class="section fade-in" id="core-systems">
+        <h2 class="section-title">CORE SYSTEMS</h2>
+        <div class="skills-grid">
+            <div class="card skill-card">
+                <div class="skill-icon"></div>
+                <h3 class="skill-title">Zero Trust & Identity</h3>
+                <p>Entra ID (Azure AD Hybrid), Conditional Access, SAML SSO, Intune device compliance, RBAC, ABAC</p>
             </div>
+            <div class="card skill-card">
+                <div class="skill-icon"></div>
+                <h3 class="skill-title">Threat Detection</h3>
+                <p>Microsoft Sentinel, Defender for Cloud Apps, KQL analytics, MITRE ATT&CK mapping, threat hunting</p>
+            </div>
+            <div class="card skill-card">
+                <div class="skill-icon"></div>
+                <h3 class="skill-title">Network Defense</h3>
+                <p>Cisco switching/routing, Sophos XG, FortiGate, MikroTik, OPNsense, SD-WAN, QoS for VoIP</p>
+            </div>
+            <div class="card skill-card">
+                <div class="skill-icon"></div>
+                <h3 class="skill-title">Incident Response</h3>
+                <p>EDR telemetry analysis (SentinelOne, Trend Micro), forensic investigations (Autopsy, SIFT), IOC extraction</p>
+            </div>
+            <div class="card skill-card">
+                <div class="skill-icon"></div>
+                <h3 class="skill-title">Cloud Security</h3>
+                <p>AWS & Azure security, GKE, Calico, IaC (Terraform, YAML), container security, private registries</p>
+            </div>
+            <div class="card skill-card">
+                <div class="skill-icon"></div>
+                <h3 class="skill-title">DevSecOps</h3>
+                <p>On-prem CI/CD, Kubernetes orchestration, Docker, Python security tooling, automated vulnerability gates</p>
+            </div>
+            <div class="card skill-card">
+                <div class="skill-icon"></div>
+                <h3 class="skill-title">Compliance</h3>
+                <p>GDPR, PCI-DSS, ISO 27001, Cyber Essentials, NIST, CIS Benchmarks, audit readiness</p>
+            </div>
+            <div class="card skill-card">
+                <div class="skill-icon"></div>
+                <h3 class="skill-title">Endpoint & RMM</h3>
+                <p>SentinelOne, Datto RMM, NinjaRMM, Qualys, Patch Management across 1000+ Windows/macOS/Linux endpoints</p>
+            </div>
+        </div>
+    </section>
 
-            <a href="#" class="btn-main">Initiate Comms (LinkedIn)</a>
-        </header>
-
-        <section id="mission">
-            <h2>Mission Profile</h2>
-            <div class="holo-card">
-                <p>
-                    Lead Technical Engineer and Cybersecurity Specialist with a proven track record in fortifying digital infrastructures against advanced persistent threats. I combine strategic oversight with tactical execution to design security architectures that are resilient, scalable, and compliant. My focus is not just on defense, but on creating observability and automated response systems that neutralize threats before impact.
+    <!-- Tactical Operations Section -->
+    <section class="section fade-in" id="tactical-operations">
+        <h2 class="section-title">TACTICAL OPERATIONS</h2>
+        <div class="projects-grid">
+            <div class="card project-card">
+                <span class="project-date">Jan 2025</span>
+                <h3 class="project-title">Multi-Platform Security Observability Dashboard</h3>
+                <p class="project-challenge">
+                    <span class="project-label">CHALLENGE:</span>
+                    Monitoring fatigue from siloed tools: SentinelOne (EDR), Sophos Firewall, Datto RMM.
+                </p>
+                <p class="project-solution">
+                    <span class="project-label">SOLUTION:</span>
+                    Built centralized Grafana dashboard with custom Python ingestion scripts and Promtail/Loki pipeline.
+                </p>
+                <p class="project-impact">
+                    <span class="project-label">IMPACT:</span>
+                    Unified visualization of IPS/SD-WAN anomalies & endpoint threats; cut detection time by 78%.
                 </p>
             </div>
-        </section>
-
-        <section id="skills">
-            <h2>Core Systems</h2>
-            <div class="grid-systems">
-                <div class="system-card"><h4>Security Operations</h4></div>
-                <div class="system-card"><h4>Incident Response</h4></div>
-                <div class="system-card"><h4>Cloud & Identity</h4></div>
-                <div class="system-card"><h4>Network Defense</h4></div>
-                <div class="system-card"><h4>Vulnerability Mgmt</h4></div>
-                <div class="system-card"><h4>DevSecOps</h4></div>
-                <div class="system-card"><h4>Compliance</h4></div>
-                <div class="system-card"><h4>Systems Architecture</h4></div>
+            
+            <div class="card project-card">
+                <span class="project-date">Nov 2024</span>
+                <h3 class="project-title">SOC Threat Intelligence Pipeline</h3>
+                <p class="project-challenge">
+                    <span class="project-label">CHALLENGE:</span>
+                    Manual IOC ingestion delayed response to emerging campaigns.
+                </p>
+                <p class="project-solution">
+                    <span class="project-label">SOLUTION:</span>
+                    Automated pipeline: Honeypots → MISP → Azure Functions (Python) → Microsoft Sentinel (Log Analytics).
+                </p>
+                <p class="project-impact">
+                    <span class="project-label">IMPACT:</span>
+                    Real-time correlation of live attacker data with enriched STIX/TAXII feeds; high-confidence KQL alerts.
+                </p>
             </div>
-        </section>
-
-        <section id="projects">
-            <h2>Tactical Operations</h2>
-            <div class="project-grid">
-
-                <div class="holo-card project-card">
-                    <div class="project-header">
-                        <h3>Multi-Platform Security Observability Dashboard</h3>
-                        <span class="date-badge">JAN 2025</span>
-                    </div>
-                    <div class="detail-grid">
-                        <div class="detail-item">
-                            <strong>Challenge</strong>
-                            <span>Fragmented visibility across hybrid cloud environments leading to delayed detection.</span>
-                        </div>
-                        <div class="detail-item">
-                            <strong>Solution</strong>
-                            <span>Centralized SIEM dashboard integrating AWS CloudWatch, Azure Sentinel, and on-prem logs.</span>
-                        </div>
-                        <div class="detail-item">
-                            <strong>Impact</strong>
-                            <span>Reduced Mean Time to Detect (MTTD) by 65% and streamlined executive reporting.</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="holo-card project-card">
-                    <div class="project-header">
-                        <h3>SOC Threat Intelligence Pipeline</h3>
-                        <span class="date-badge">NOV 2024</span>
-                    </div>
-                    <div class="detail-grid">
-                        <div class="detail-item">
-                            <strong>Challenge</strong>
-                            <span>High volume of false positives overwhelming analysts during peak traffic.</span>
-                        </div>
-                        <div class="detail-item">
-                            <strong>Solution</strong>
-                            <span>Automated ingestion pipeline enriching alerts with threat intel feeds via SOAR playbooks.</span>
-                        </div>
-                        <div class="detail-item">
-                            <strong>Impact</strong>
-                            <span>Eliminated 80% of false positives; increased analyst efficiency significantly.</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="holo-card project-card">
-                    <div class="project-header">
-                        <h3>Infrastructure & Security Automation</h3>
-                        <span class="date-badge">SEPT 2024</span>
-                    </div>
-                    <div class="detail-grid">
-                        <div class="detail-item">
-                            <strong>Challenge</strong>
-                            <span>Inconsistent configuration management creating drift and potential exploits.</span>
-                        </div>
-                        <div class="detail-item">
-                            <strong>Solution</strong>
-                            <span>Implemented Terraform and Ansible for IaC with automated security scanning (trivy/checkov).</span>
-                        </div>
-                        <div class="detail-item">
-                            <strong>Impact</strong>
-                            <span>Achieved 100% configuration consistency and automated patch deployment.</span>
-                        </div>
-                    </div>
-                </div>
-
-                 <div class="holo-card project-card">
-                    <div class="project-header">
-                        <h3>Vulnerability Management & Remediation Lab</h3>
-                        <span class="date-badge">DEC 2023</span>
-                    </div>
-                    <div class="detail-grid">
-                        <div class="detail-item">
-                            <strong>Challenge</strong>
-                            <span>Lack of safe environment to test exploits and remediation strategies.</span>
-                        </div>
-                        <div class="detail-item">
-                            <strong>Solution</strong>
-                            <span>Built an isolated, virtualized range replicating enterprise stack for Red/Blue teaming.</span>
-                        </div>
-                        <div class="detail-item">
-                            <strong>Impact</strong>
-                            <span>Upskilled team on latest CVEs and validated patch efficacy prior to production rollout.</span>
-                        </div>
-                    </div>
-                </div>
-
+            
+            <div class="card project-card">
+                <span class="project-date">Sept 2024</span>
+                <h3 class="project-title">Infrastructure & Security Automation</h3>
+                <p class="project-challenge">
+                    <span class="project-label">CHALLENGE:</span>
+                    Manual DNS security validation (SPF/DMARC/DKIM) prone to human error.
+                </p>
+                <p class="project-solution">
+                    <span class="project-label">SOLUTION:</span>
+                    Developed Python GUI (Tkinter) with dnspython for rapid verification and domain spoofing prevention.
+                </p>
+                <p class="project-impact">
+                    <span class="project-label">IMPACT:</span>
+                    Enabled admins to validate email integrity enterprise-wide in seconds — hardening against phishing.
+                </p>
             </div>
-        </section>
-
-        <section id="experience">
-            <h2>Service Record</h2>
-            <div class="timeline">
-                
-                <div class="timeline-item">
-                    <div class="timeline-node"></div>
-                    <div class="job-title">Lead Technical Engineer</div>
-                    <span class="company">CyberDefense Corp | 2023 - Present</span>
-                    <p>Leading a team of 8 engineers in the design and implementation of Zero Trust architecture. Oversaw a 40% reduction in security incidents quarter-over-quarter.</p>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-node"></div>
-                    <div class="job-title">Senior Security Analyst</div>
-                    <span class="company">TechGiant Solutions | 2020 - 2023</span>
-                    <p>Managed SOC Tier 2/3 operations. Spearheaded the incident response for critical ransomware attempts, successfully neutralizing threats with zero data loss.</p>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-node"></div>
-                    <div class="job-title">Network Security Administrator</div>
-                    <span class="company">Global Net Systems | 2018 - 2020</span>
-                    <p>Configured firewalls, VPNs, and IDS/IPS systems. Hardened network perimeter and conducted regular penetration testing audits.</p>
-                </div>
-
+            
+            <div class="card project-card">
+                <span class="project-date">Dec 2023</span>
+                <h3 class="project-title">Vulnerability Management & Remediation Lab</h3>
+                <p class="project-challenge">
+                    <span class="project-label">CHALLENGE:</span>
+                    Gap between scanning (GVM) and real-time monitoring (Wazuh); slow remediation.
+                </p>
+                <p class="project-solution">
+                    <span class="project-label">SOLUTION:</span>
+                    Integrated GVM + Wazuh; scripted automated host isolation based on severity.
+                </p>
+                <p class="project-impact">
+                    <span class="project-label">IMPACT:</span>
+                    Centralized posture dashboard + auto-response reduced critical exposure window from 45→7 days.
+                </p>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="credentials">
-            <h2>Credentials & Clearances</h2>
-            <div class="cert-grid">
-                <div class="cert-item"><h5>CISSP - Certified Information Systems Security Professional</h5></div>
-                <div class="cert-item"><h5>AWS Certified Security - Specialty</h5></div>
-                <div class="cert-item"><h5>OSCP - Offensive Security Certified Professional</h5></div>
-                <div class="cert-item"><h5>CompTIA Security+ / CySA+</h5></div>
-            </div>
-        </section>
-
-        <section id="arsenal">
-            <h2>Technical Arsenal</h2>
-            <div class="holo-card">
-                <div class="tech-cloud">
-                    <span class="tech-tag">Python</span>
-                    <span class="tech-tag">Bash/Shell</span>
-                    <span class="tech-tag">SIEM (Splunk/Sentinel)</span>
-                    <span class="tech-tag">Wireshark</span>
-                    <span class="tech-tag">Nmap</span>
-                    <span class="tech-tag">Burp Suite</span>
-                    <span class="tech-tag">Metasploit</span>
-                    <span class="tech-tag">Docker/Kubernetes</span>
-                    <span class="tech-tag">Terraform</span>
-                    <span class="tech-tag">Ansible</span>
-                    <span class="tech-tag">Linux Hardening</span>
-                    <span class="tech-tag">Active Directory</span>
-                    <span class="tech-tag">EDR Solutions</span>
-                    <span class="tech-tag">CrowdStrike</span>
+    <!-- Service Record Section -->
+    <section class="section fade-in" id="service-record">
+        <h2 class="section-title">SERVICE RECORD</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-node"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">Jul 2025 – Present</div>
+                    <h3 class="timeline-role">Lead Technical & Senior Service Desk Engineer</h3>
+                    <div class="timeline-company">Mirus IT Solutions (Advania)</div>
+                    <p>Top escalation point for security incidents. Optimized Microsoft Sentinel with KQL rules. Secured identities via Entra ID & Intune. Engineered Cisco firewall/VPN architectures. Automated SOC workflows via Power Automate + Graph API.</p>
                 </div>
             </div>
-        </section>
+            
+            <div class="timeline-item">
+                <div class="timeline-node"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">May 2024 – Jun 2025</div>
+                    <h3 class="timeline-role">Senior Technical & Cybersecurity Engineer</h3>
+                    <div class="timeline-company">Gavotech IT Solutions</div>
+                    <p>Led IR & digital forensics (Autopsy, FTK). Built on-prem CI/CD with security gates. Conducted deep packet analysis (Wireshark). Hardened AD, Entra ID, and firewalls. Reduced breaches by 30% via strict NAT/VPN policies.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-node"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">May 2022 – May 2024</div>
+                    <h3 class="timeline-role">Technical Engineer</h3>
+                    <div class="timeline-company">Gavotech IT Solutions</div>
+                    <p>Managed 1000+ endpoints (Win/macOS/Linux). Deployed SentinelOne & Trend Micro (↓35% malware). Oversaw Windows/Linux server resilience. Secured networks via Sophos/FortiGate. Optimized DNS/DHCP & QoS for VoIP.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <footer>
-            <p>DESIGNED FOR THE GALACTIC FRONTIER</p>
-            <p>&copy; 2025 Gareth Sheldon. System Secure.</p>
-        </footer>
+    <!-- Credentials & Clearances Section -->
+    <section class="section fade-in" id="credentials">
+        <h2 class="section-title">CREDENTIALS & CLEARANCES</h2>
+        
+        <div class="cert-category">
+            <h3 class="cert-category-title">Governance, Risk & Compliance</h3>
+            <div class="certs-grid">
+                <div class="card cert-card">
+                    <div class="cert-logo">ISO<br>27001<br>LA</div>
+                    <div class="cert-title">Lead Auditor</div>
+                    <div class="cert-org">Mastermind</div>
+                </div>
+                <div class="card cert-card">
+                    <div class="cert-logo">IT<br>Audit<br>& Risk</div>
+                    <div class="cert-title">Specialist</div>
+                    <div class="cert-org">Mastermind</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cert-category">
+            <h3 class="cert-category-title">Defensive Security & IR</h3>
+            <div class="certs-grid">
+                <div class="card cert-card">
+                    <div class="cert-logo">BTJA</div>
+                    <div class="cert-title">Blue Team Jr Analyst</div>
+                    <div class="cert-org">Sec Blue Team</div>
+                </div>
+                <div class="card cert-card">
+                    <div class="cert-logo">VM<br>Specialist</div>
+                    <div class="cert-title">Tenable Specialist</div>
+                    <div class="cert-org">Tenable</div>
+                </div>
+                <div class="card cert-card">
+                    <div class="cert-logo">ATT&CK<br>v13</div>
+                    <div class="cert-title">Operationalizing</div>
+                    <div class="cert-org">AttackIQ</div>
+                </div>
+                <div class="card cert-card">
+                    <div class="cert-logo">Cyber<br>Forensics</div>
+                    <div class="cert-title">Professional</div>
+                    <div class="cert-org">Great Learning</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cert-category">
+            <h3 class="cert-category-title">Cloud & DevSecOps</h3>
+            <div class="certs-grid">
+                <div class="card cert-card">
+                    <div class="cert-logo">AWS<br>Cloud</div>
+                    <div class="cert-title">Consultant</div>
+                    <div class="cert-org">AWS</div>
+                </div>
+                <div class="card cert-card">
+                    <div class="cert-logo">Calico<br>Op L1</div>
+                    <div class="cert-title">K8s Security</div>
+                    <div class="cert-org">Tigera</div>
+                </div>
+                <div class="card cert-card">
+                    <div class="cert-logo">Azure<br>Monitor</div>
+                    <div class="cert-title">Deploy & Config</div>
+                    <div class="cert-org">Microsoft</div>
+                </div>
+                <div class="card cert-card">
+                    <div class="cert-logo">AD<br>DS</div>
+                    <div class="cert-title">Admin</div>
+                    <div class="cert-org">Microsoft</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cert-category">
+            <h3 class="cert-category-title">Network & Endpoint</h3>
+            <div class="certs-grid">
+                <div class="card cert-card">
+                    <div class="cert-logo">Sophos<br>SE</div>
+                    <div class="cert-title">Cert Engineer</div>
+                    <div class="cert-org">Sophos</div>
+                </div>
+                <div class="card cert-card">
+                    <div class="cert-logo">NSE<br>1-3</div>
+                    <div class="cert-title">Network Sec Assoc</div>
+                    <div class="cert-org">Fortinet</div>
+                </div>
+                <div class="card cert-card">
+                    <div class="cert-logo">EDR<br>S1</div>
+                    <div class="cert-title">SentinelOne Spec</div>
+                    <div class="cert-org">N-able</div>
+                </div>
+                <div class="card cert-card">
+                    <div class="cert-logo">HPE<br>Aruba</div>
+                    <div class="cert-title">Product Specialist</div>
+                    <div class="cert-org">HPE</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    </div>
+    <!-- Technical Arsenal Section -->
+    <section class="section fade-in" id="arsenal">
+        <h2 class="section-title">TECHNICAL ARSENAL</h2>
+        <div class="tag-cloud">
+            <span class="tag">Azure Sentinel</span>
+            <span class="tag">Microsoft Defender</span>
+            <span class="tag">Entra ID</span>
+            <span class="tag">Intune</span>
+            <span class="tag">KQL</span>
+            <span class="tag">MITRE ATT&CK</span>
+            <span class="tag">Cisco IOS</span>
+            <span class="tag">FortiGate</span>
+            <span class="tag">Sophos XG</span>
+            <span class="tag">MikroTik</span>
+            <span class="tag">OPNsense</span>
+            <span class="tag">SentinelOne</span>
+            <span class="tag">Datto RMM</span>
+            <span class="tag">Qualys</span>
+            <span class="tag">Wazuh</span>
+            <span class="tag">Grafana</span>
+            <span class="tag">Prometheus</span>
+            <span class="tag">Loki</span>
+            <span class="tag">Kubernetes</span>
+            <span class="tag">Calico</span>
+            <span class="tag">GKE</span>
+            <span class="tag">Docker</span>
+            <span class="tag">Terraform</span>
+            <span class="tag">Python</span>
+            <span class="tag">PowerShell</span>
+            <span class="tag">Wireshark</span>
+            <span class="tag">TCPDump</span>
+            <span class="tag">Autopsy</span>
+            <span class="tag">SIFT</span>
+            <span class="tag">MISP</span>
+            <span class="tag">ISO 27001</span>
+            <span class="tag">NIST CSF</span>
+            <span class="tag">GDPR</span>
+            <span class="tag">PCI-DSS</span>
+            <span class="tag">Zero Trust</span>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>May the Force (of Good Security) Be With You • Cape Town, South Africa</p>
+        <p class="creative-note">When I’m not securing a hybrid cloud, I’m producing tracks in FL Studio — engineering meets art.</p>
+    </footer>
 
     <script>
-        // Starfield Generation
-        const starfield = document.getElementById('starfield');
-        const starCount = 100;
-
-        for(let i=0; i<starCount; i++) {
-            const star = document.createElement('div');
-            star.classList.add('star');
+        document.addEventListener('DOMContentLoaded', function() {
+            const starfield = document.getElementById('starfield');
+            const starCount = 220;
+            const shootingStarCount = 6;
             
-            // Random positioning
-            const x = Math.random() * 100;
-            const y = Math.random() * 100;
-            const size = Math.random() * 2 + 1;
-            const duration = Math.random() * 3 + 2;
-            const delay = Math.random() * 5;
-
-            star.style.left = `${x}%`;
-            star.style.top = `${y}%`;
-            star.style.width = `${size}px`;
-            star.style.height = `${size}px`;
-            star.style.setProperty('--duration', `${duration}s`);
-            star.style.animationDelay = `${delay}s`;
-
-            starfield.appendChild(star);
-        }
-
-        // Scroll Animation Observer
-        const observerOptions = {
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 2 + 0.8;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                star.style.opacity = Math.random() * 0.7 + 0.3;
+                starfield.appendChild(star);
+            }
+            
+            for (let i = 0; i < shootingStarCount; i++) {
+                const shootingStar = document.createElement('div');
+                shootingStar.classList.add('shooting-star');
+                shootingStar.style.left = `${-10 + Math.random() * 110}%`;
+                shootingStar.style.top = `${-10 + Math.random() * 110}%`;
+                shootingStar.style.height = `${Math.random() * 70 + 40}px`;
+                const duration = Math.random() * 5 + 3;
+                const delay = Math.random() * 15;
+                shootingStar.style.animationDuration = `${duration}s`;
+                shootingStar.style.animationDelay = `${delay}s`;
+                starfield.appendChild(shootingStar);
+            }
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('appear');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.fade-in').forEach(section => {
+                observer.observe(section);
             });
-        }, observerOptions);
-
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
         });
     </script>
 </body>
 </html>
+
