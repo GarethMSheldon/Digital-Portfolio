@@ -1,11 +1,11 @@
 <div align="center">
 
 # 🏰 GARETH THE GUARDIAN
-### HIGH WARDEN OF ARCANE SECURITY | DEFENDER OF THE REALM
+### LEAD TECHNICAL ENGINEER | CYBERSECURITY SPECIALIST
 
-**Beast Hunting • Ward of Distrust • Aetherial Wards • Crisis Response • Castle Defense**
+[cite_start]**Vulnerability Management • Firewalls • Threat Hunting • Network Security • Incident Response** [cite: 16]
 
-[![Summon Via Raven](https://img.shields.io/badge/Summon_Via-Raven_(LinkedIn)-C9A66B?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=2D5016)](https://linkedin.com/in/gareth-sheldon)
+[![Summon Via Raven](https://img.shields.io/badge/Summon_Via-Raven_(LinkedIn)-C9A66B?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=2D5016)](https://linkedin.com/in/gareth-sheldon) [![Bardic Portfolio](https://img.shields.io/badge/Bardic_Scrolls-Portfolio-4A6B8E?style=for-the-badge&logo=linktree&logoColor=white&labelColor=0F0F17)](https://linktr.ee/garethmsheldon)
 
 </div>
 
@@ -13,13 +13,11 @@
 
 ## 📜 SCROLL OF SERVICE (Mission Profile)
 
-High Warden and Arcane Security Specialist safeguarding complex hybrid aetherial and cloud environments — with a focus on **FinTech kingdoms**. I ensure infrastructure runs smoother and defends stronger than a dwarven fortress.
+[cite_start]I am a Lead Technical Engineer and Cybersecurity Specialist who runs complex hybrid IT and cloud environments with a focus on **FinTech ecosystems**[cite: 19]. [cite_start]I ensure infrastructure runs smoother and hits harder than one of my music mixes[cite: 20].
 
-By day, I lead advanced technical support, fortify environments for stringent security and stability, and serve as the final arbiter for critical sieges — performing deep-dive investigations for server, network, and aetherial incidents.
+[cite_start]By day, I act as the top technical escalation point for critical outages, conducting Root Cause Analysis (RCA) for server, network, and cloud incidents[cite: 49]. [cite_start]My playground spans **Azure, Entra ID, Intune, Cisco, and Microsoft Sentinel**[cite: 24].
 
-My arsenal spans **Azure Citadel, Entra Identity Scrolls, Intune Enchantments, Microsoft Sentinel Watchtowers, Cisco Forges, Sophos Bastions, FortiGate Strongholds**, and **Kubernetes Golems**. But what truly sets me apart is the fusion of structured engineering logic and creative problem-solving — honed through years composing ballads on the lute.
-
-> *"Engineering gives me structure. Music gives me rhythm. Together, they teach me to solve every challenge with both logic and creativity."*
+[cite_start]When not fortifying digital castles, I use FL Studio to produce and master audio tracks[cite: 34]. [cite_start]Engineering gives me structure, music gives me rhythm, and together they teach me to approach challenges with deep logic and creative solutions[cite: 35].
 
 ---
 
@@ -27,33 +25,45 @@ My arsenal spans **Azure Citadel, Entra Identity Scrolls, Intune Enchantments, M
 
 | Domain | Grimoire & Spells |
 | :--- | :--- |
-| **🛡️ Zero Trust & Identity** | Entra ID (Azure AD Hybrid), Conditional Access, SAML SSO, Intune compliance, RBAC, ABAC |
-| **👁️ Threat Detection** | Microsoft Sentinel, Defender for Cloud Apps, KQL analytics, MITRE ATT&CK mapping, Threat Hunting |
-| **🏰 Network Defense** | Cisco switching/routing, Sophos XG, FortiGate, MikroTik, OPNsense, SD-WAN, QoS for VoIP |
-| **🩸 Incident Response** | EDR telemetry (SentinelOne, Trend Micro), Forensics (Autopsy, SIFT), IOC extraction |
-| **☁️ Cloud Security** | AWS & Azure security, GKE, Calico, IaC (Terraform, YAML), Container Security |
-| **⚙️ DevSecOps** | On-prem CI/CD, Kubernetes, Docker, Python security tooling, Automated vulnerability gates |
-| **⚖️ Compliance** | GDPR, PCI-DSS, ISO 27001, Cyber Essentials, NIST, CIS Benchmarks |
-| **💻 Endpoint & RMM** | SentinelOne, Datto RMM, NinjaRMM, Qualys, Patch Mgmt (1000+ endpoints) |
+| **🛡️ Identity & Zero Trust** | [cite_start]Entra ID (Azure AD Hybrid), Conditional Access, SAML SSO, Intune Compliance [cite: 43, 44] |
+| **👁️ Threat Detection** | [cite_start]Microsoft Sentinel (SIEM), Defender for Cloud Apps, KQL, MITRE ATT&CK [cite: 48, 201] |
+| **🏰 Network Defense** | [cite_start]Cisco Routing/Switching, Sophos XG (Active-Passive), FortiGate, MikroTik, OPNsense [cite: 28, 45, 214] |
+| **🩸 Incident Response** | [cite_start]SentinelOne (EDR), Autopsy, SANS SIFT, Malware Investigation, IOC Extraction [cite: 78, 230, 231] |
+| **☁️ Cloud & DevSecOps** | [cite_start]Azure, AWS, Google Kubernetes Engine (GKE), Docker, Python Automation [cite: 7, 10, 24, 220, 276] |
+| **💻 Endpoint Command** | [cite_start]Datto RMM, NinjaRMM, Qualys, Patch Management (500+ devices) [cite: 31, 89] |
+| **⚖️ Governance** | [cite_start]ISO 27001, GDPR, PCI-DSS, Cyber Essentials, CIS Benchmarks [cite: 52, 225] |
 
 ---
 
 ## ⚔️ QUEST LOG (Tactical Operations)
 
-### 💎 Multi-Realm Scrying Crystal (Frostfall 2025)
-* **🦁 Challenge:** Watchtower fatigue from siloed tools: SentinelOne (EDR), Sophos Firewall, Datto RMM.
-* **🧪 Solution:** Forged centralized Grafana crystal with custom Python incantations and Promtail/Loki pipeline.
-* **⚡ Impact:** Unified vision of IPS/SD-WAN anomalies & endpoint threats; cut detection time by **78%**.
+### 💎 The Unified Vision Dashboard (Jan 2025)
+* [cite_start]**🦁 Challenge:** Fragmented visibility across SentinelOne, Sophos Firewalls, and Datto RMM[cite: 269].
+* [cite_start]**🧪 Solution:** Forged a centralized Grafana dashboard using Loki for log aggregation and Python scripts/Promtail for ingestion[cite: 269, 270].
+* [cite_start]**⚡ Impact:** Correlated endpoint threats with network anomalies, enhancing SOC visibility and response time[cite: 271].
 
-### 🔮 Order of the Crystal Ball (Evening Star 2024)
-* **🦁 Challenge:** Manual rune ingestion delayed response to emerging dark campaigns.
-* **🧪 Solution:** Enchanted pipeline: Honeypots → MISP → Azure Functions (Python) → Microsoft Sentinel (Log Analytics).
-* **⚡ Impact:** Real-time correlation of live attacker data with enriched STIX/TAXII scrolls; high-confidence KQL alerts.
+### 🔮 SOC Threat Intelligence Pipeline (Nov 2024)
+* [cite_start]**🦁 Challenge:** Manual threat intelligence ingestion delayed response times[cite: 274].
+* [cite_start]**🧪 Solution:** Integrated a Honeypot, MISP, and Microsoft Sentinel using Azure Functions (Python) to automate threat data flows[cite: 274, 276].
+* [cite_start]**⚡ Impact:** Achieved real-time correlation of live attacks with external IOCs, creating high-confidence detection rules[cite: 277].
 
-### 📜 Fortress & Security Enchantments (Sun's Dusk 2024)
-* **🦁 Challenge:** Manual DNS security validation (SPF/DMARC/DKIM) prone to scribe error.
-* **🧪 Solution:** Developed Python alchemy (Tkinter) with dnspython for rapid verification and domain spoofing prevention.
-* **⚡ Impact:** Enabled wardens to validate message integrity kingdom-wide in seconds — hardening against phishing.
+### 📜 DNS Integrity Checker (Sept 2024)
+* [cite_start]**🦁 Challenge:** Manual verification of SPF, DMARC, and DKIM records was inefficient[cite: 280].
+* [cite_start]**🧪 Solution:** Developed a Python tool with a GUI (Tkinter) to automate DNS security protocol verification[cite: 280, 281].
+* [cite_start]**⚡ Impact:** Enhanced domain protection capabilities for administrators[cite: 281].
 
-### 🧪 Vulnerability Alchemy & Remediation Laboratory (Morning Star 2024)
-* **🦁 Challenge:** *[Data truncated in source]*
+### 🧪 Vulnerability Alchemy Lab (Dec 2023)
+* [cite_start]**🦁 Challenge:** Disconnected vulnerability scanning and monitoring[cite: 284].
+* [cite_start]**🧪 Solution:** Integrated Greenbone Vulnerability Manager (GVM) with Wazuh for active scanning and real-time monitoring[cite: 284].
+* [cite_start]**⚡ Impact:** Automated response scripts (IP blocking/Host isolation) to improve remediation speed[cite: 285].
+
+---
+
+## 🎖️ ROYAL DECREES (Certifications)
+
+* [cite_start]**ISO/IEC 27001:2022 Lead Auditor** (Mastermind, April 2025) [cite: 265]
+* [cite_start]**Sophos Firewall Certified Engineer** (Sophos, Nov 2024) [cite: 265]
+* [cite_start]**Kaseya Certified Technician in Datto Cybersecurity** (Oct 2024) [cite: 265]
+* [cite_start]**AWS Cloud Practitioner Essentials** (Amazon, June 2024) [cite: 265]
+* [cite_start]**Blue Team Junior Analyst** (Security Blue Team, March 2024) [cite: 265]
+* [cite_start]**Fortinet Network Security Associate (NSE 1, 2, 3)** (2023) [cite: 265]
